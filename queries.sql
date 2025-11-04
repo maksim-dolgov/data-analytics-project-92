@@ -21,7 +21,7 @@ order by average_income) as b
 where average_income < (select floor(avg(s.quantity*p.price)) from sales s join products p on p.product_id = s.product_id);
 -- Данный запрос выводит таблицу, которая содержит информацию о продавцах, чья средняя выручка за сделку меньше средней выручки за сделку по всем продавцам. Таблица отсортирована по выручке по возрастанию.
 select concat(e.first_name, ' ', e.last_name) as seller,
-to_char(s.sale_date, 'FMDay') as day_of_week,
+to_char(s.sale_date, 'fmday') as day_of_week,
 floor(sum(s.quantity*p.price)) as income
 from employees e 
 join sales s on e.employee_id = s.sales_person_id
