@@ -26,10 +26,13 @@ select * from (
     order by average_income
 ) as b
 where
-    average_income < (select floor(avg(s.quantity * p.price)) 
-    from sales as s inner join products as p on s.product_id = p.product_id);
+    average_income < (
+        select floor(avg(s.quantity * p.price))
+        from sales as s inner join products as p on s.product_id = p.product_id
+    );
 -- Данный запрос выводит таблицу, которая содержит информацию о продавцах,
--- чья средняя выручка за сделку меньше средней выручки за сделку по всем продавцам. 
+-- чья средняя выручка за сделку меньше средней выручки за сделку
+-- по всем продавцам. 
 -- Таблица отсортирована по выручке по возрастанию.
 select
     concat(e.first_name, ' ', e.last_name) as seller,
@@ -42,7 +45,8 @@ group by seller, day_of_week, extract(isodow from s.sale_date)
 order by extract(isodow from s.sale_date), seller;
 -- Данный запрос выводит таблицу, которая содержит 
 -- информацию о выручке по дням недели. 
--- Каждая запись содержит имя и фамилию продавца, день недели и суммарную выручку. 
+-- Каждая запись содержит имя и фамилию продавца, день недели
+-- и суммарную выручку. 
 -- Данные отсортированы по порядковому номеру дня недели и продавцу.
 select
     case
