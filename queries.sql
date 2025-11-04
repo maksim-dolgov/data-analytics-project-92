@@ -1,4 +1,4 @@
-select count(c.customer_id)  as customers_count
+select count(c.customer_id) as customers_count
 from customers c;
 -- Данный запрос считает количество покупателей в таблице customers
 select concat(e.first_name, ' ', e.last_name) as seller,
