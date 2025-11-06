@@ -5,9 +5,9 @@ select
     concat(e.first_name, ' ', e.last_name) as seller,
     count(s.sales_id) as operations,
     floor(sum(s.quantity * p.price)) as income
-from products as p
-inner join sales as s on s.product_id = p.product_id 
-inner join employees as e on e.employee_id = s.sales_person_id
+from employees as e
+inner join sales as s on e.employee_id = s.sales_person_id
+inner join products as p on s.product_id = p.product_id
 group by seller
 order by income desc
 limit 10;
@@ -19,9 +19,9 @@ select * from (
     select
         concat(e.first_name, ' ', e.last_name) as seller,
         floor(avg(s.quantity * p.price)) as average_income
-    from products as p
-    inner join sales as s on s.product_id = p.product_id 
-    inner join employees as e on e.employee_id = s.sales_person_id
+    from employees as e
+    inner join sales as s on e.employee_id = s.sales_person_id
+    inner join products as p on s.product_id = p.product_id
     group by seller
     order by average_income
 ) as b
@@ -38,9 +38,9 @@ select
     concat(e.first_name, ' ', e.last_name) as seller,
     to_char(s.sale_date, 'fmday') as day_of_week,
     floor(sum(s.quantity * p.price)) as income
-from products as p
-inner join sales as s on s.product_id = p.product_id 
-inner join employees as e on e.employee_id = s.sales_person_id
+from employees as e
+inner join sales as s on e.employee_id = s.sales_person_id
+inner join products as p on s.product_id = p.product_id
 group by seller, day_of_week, extract(isodow from s.sale_date)
 order by extract(isodow from s.sale_date), seller;
 -- Данный запрос выводит таблицу, которая содержит 
